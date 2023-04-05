@@ -1,3 +1,4 @@
+"use strict";
 const { BadRequestError } = require("./expressError");
 
 
@@ -6,6 +7,15 @@ const { BadRequestError } = require("./expressError");
 function convertStrNums(strNums) {
   // if the conversion isn't successful, throw a BadRequestError and will
   // be handled in your route
+
+  //what if they pass something that is not an array... ie map fails?
+
+    const nums = strNums.map(num => +num);
+    if (nums.includes(NaN)){
+      throw new BadRequestError();
+    }
+
+  return nums;
 }
 
 
