@@ -36,8 +36,44 @@ app.get("/mean", function (req, res) {
 });
 
 /** Finds median of nums in qs: returns {operation: "median", result } */
+app.get("/median", function (req, res) {
+  console.log("route /median ran.");
+
+  if (Object.keys(req.query).length === 0) throw new BadRequestError(MISSING);
+
+  const queryNums = req.query["nums"]; //string
+  const strNums = queryNums.split(",");
+  //investigate
+
+  const nums = convertStrNums(strNums);
+  const median = findMedian(nums);
+
+  return res.json({
+    "operation": "median",
+    "value": median,
+  });
+
+});
 
 /** Finds mode of nums in qs: returns {operation: "mean", result } */
+app.get("/mode", function (req, res) {
+  console.log("route /mode ran.");
+
+  if (Object.keys(req.query).length === 0) throw new BadRequestError(MISSING);
+
+  const queryNums = req.query["nums"]; //string
+  const strNums = queryNums.split(",");
+  //investigate
+
+  const nums = convertStrNums(strNums);
+  const mode = findMode(nums);
+
+  return res.json({
+    "operation": "mode",
+    "value": mode,
+  });
+
+});
 
 /** 404 handler: matches unmatched routes; raises NotFoundError. */
 app.use(function (req, res) {
